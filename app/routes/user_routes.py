@@ -3,12 +3,15 @@ from app.schemas.user import UserCreate, UserLogin, UserUpdate, UserOut
 from app.controllers.user_controller import register_user, login_user, update_profile, delete_user
 from app.core.database import get_db
 from sqlalchemy.orm import Session
+from app.utils.security import get_current_user
+from app.models.user import User
+
 
 router = APIRouter()
 
 @router.post("/register", response_model=UserOut)
 def register(user: UserCreate, db: Session = Depends(get_db)):
-    return register_user(user, db)
+    return register_user(user, db)  
 
 @router.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
